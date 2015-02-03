@@ -12,26 +12,39 @@
 
 #include <atomic>
 #include <string>
+#include <functional>
+#include <list>
 
 //---------------------------------------------------------
 // forward declarations 
 class scene;
 class camera;
 class colour;
+class renderer;
 
 //---------------------------------------------------------
 
+typedef std::function<void(renderer& r, const std::string&)> job_handler;
+
+struct job_entry {
+	job_handler			handler;
+	std::string			filename;
+	unsigned int		freq;
+};
+
 class renderer {
-	
+
+public:
+
 protected:
 	const scene&			m_scene;
 	const camera&			m_camera;
 	std::atomic_int			m_frame{0};
 	std::atomic_bool		m_shutdown{false};
+	std::list<job_entry>	m_jobs;
 	int						w, h;
 
 	colour*					colours;
-	int*					counters;
 
 public:
 	renderer(scene& scene, camera& camera, const int w, const int h);
@@ -39,13 +52,13 @@ public:
 	~renderer();
 
 protected:
+	void					finish_frame(colour *c);
 	colour					trace_pixel(int px, int py);
 	void					trace_forever();
 
 public:
 	void					start(int maxthreads = 0);
-
-	int						frame();
+	void					add_output_job(job_handler handler, const std::string& filename, unsigned int freq);
 
 public:	// output methods
 	void					write_ppm(const std::string& filename);

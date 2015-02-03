@@ -117,16 +117,7 @@ int main(int argc, char * const argv[]) {
 		r = new renderer(world, camera, 1024, 1024);
 	}
 
+	r->add_output_job(&renderer::write_ppm16, "cornell.ppm", 8);
+	r->add_output_job(&renderer::write_rrt, "cornell.rrt", 5);
 	r->start();
-
-	int i = 0;
-	while (true) {
-		std::cout << std::setw(6) << r->frame() << "\r" << std::flush;
-		if ((++i % 60) == 0) {
-			r->write_ppm16("cornell.ppm16");
-			r->write_rrt("cornell.rrt");
-		}
-		sleep(1);
-	}
-	std::cout << std::endl;
 }

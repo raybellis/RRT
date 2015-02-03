@@ -10,6 +10,8 @@
 #include <cstdio>
 #include <arpa/inet.h>
 #include <boost/thread/thread.hpp>
+#include <iostream>
+#include <iomanip>
 
 #include "renderer.h"
 
@@ -23,7 +25,6 @@ renderer::renderer(scene& scene, camera& camera, const int _w, const int _h) :
 {
 	int n = w * h;
 	colours = new colour[n];
-	counters = new int[n];
 	camera.aspect(w, h);
 }
 
@@ -47,7 +48,12 @@ renderer::renderer(scene& scene, camera& camera, const std::string& filename) :
 renderer::~renderer()
 {
 	delete[] colours;
-	delete[] counters;
+}
+
+void renderer::add_output_job(job_handler handler, const std::string& filename, unsigned int freq)
+{
+	job_entry		entry{handler, filename, freq};
+	m_jobs.push_back(entry);
 }
 
 colour renderer::trace_pixel(int px, int py)
@@ -65,17 +71,37 @@ colour renderer::trace_pixel(int px, int py)
 	return m_scene.trace(r);
 }
 
+void renderer::finish_frame(colour *c)
+{
+	// copy frame details
+	for (unsigned int i = 0, n = w * h; i < n; ++i) {
+		colours[i] += c[i];
+	}
+
+	++m_frame;
+	std::cout << std::setw(6) << m_frame << "\r" << std::flush;
+
+	// call any registered output jobs
+	for (auto job : m_jobs) {
+		if (m_frame % job.freq == 0) {
+			job.handler(*this, job.filename);
+		}
+	}
+}
+
 void renderer::trace_forever()
 {
+	colour *c = new colour[w * h];
 	while (true) {
 		int i = 0;
 		for (int y = 0; y < h; ++y) {
 			for (int x = 0; x < w; ++x) {
-				colours[i++] += trace_pixel(x, y);
+				c[i++] = trace_pixel(x, y);
 			}
 		}
-		++m_frame;
+		finish_frame(c);
 	}
+	delete[] c;
 }
 
 void renderer::start(int maxthreads)
@@ -91,7 +117,7 @@ void renderer::start(int maxthreads)
 		group.add_thread(threads[i]);
 	}
 
-	// group.join_all();
+	group.join_all();
 }
 
 void renderer::write_ppm(const std::string& filename)
@@ -140,9 +166,4 @@ void renderer::write_rrt(const std::string& filename)
 	::fwrite(&m_frame, sizeof(m_frame), 1, fp);
 	::fwrite(colours, sizeof(colour), w * h, fp);
 	::fclose(fp);
-}
-
-int renderer::frame()
-{
-	return m_frame;
 }
