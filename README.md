@@ -33,7 +33,7 @@ RRT requires a C++11 compatible compiler, Boost, GD, libpng, libjpeg and libz.  
 
 Two samples scenes are included so far, "snooker" and "cornell".
 
-The demo programs will either start a new render, or if passed a `.rrt` file as parameter will use that as the starting render buffer state.  Every minute the current render buffer is rewritten to the `.rrt` file, as well as a 48-bpp PPM file.   The `netpbm` package can be used to convert  PPM files into PNG or JPEG, or many other formats.
+The demo programs will either start a new render, or if passed a `.rrt` file as parameter will use that as the starting render buffer state.  Every eight samples the current render buffer is rewritten to the `.rrt` file, as well as a 48-bpp PPM file.   The `netpbm` package can be used to convert  PPM files into PNG or JPEG, or many other formats.
 
 ## TODO
 - More primitives (especially meshes!)

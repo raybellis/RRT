@@ -118,6 +118,6 @@ int main(int argc, char * const argv[]) {
 	}
 
 	r->add_output_job(&renderer::write_ppm16, "cornell.ppm", 8);
-	r->add_output_job(&renderer::write_rrt, "cornell.rrt", 5);
+	r->add_output_job(&renderer::write_rrt, "cornell.rrt", 8);
 	r->start();
 }

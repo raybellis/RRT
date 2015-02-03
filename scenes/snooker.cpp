@@ -101,6 +101,6 @@ int main(int argc, char * const argv[]) {
 	}
 
 	r->add_output_job(&renderer::write_ppm16, "snooker.ppm", 8);
-	r->add_output_job(&renderer::write_rrt, "snooker.rrt", 5);
+	r->add_output_job(&renderer::write_rrt, "snooker.rrt", 8);
 	r->start();
 }
