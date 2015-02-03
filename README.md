@@ -29,10 +29,15 @@ There are no "lights" in RRT.  Any object can have a `Shader::constant` shader a
 
 RRT requires a C++11 compatible compiler, Boost, GD, libpng, libjpeg and libz.  The supplied Makefile is for Mac OS X with macports.
 
+## Running
+
 Two samples scenes are included so far, "snooker" and "cornell".
+
+The demo programs will either start a new render, or if passed a `.rrt` file as parameter will use that as the starting render buffer state.  Every minute the current render buffer is rewritten to the `.rrt` file, as well as a 48-bpp PPM file.   The `netpbm` package can be used to convert  PPM files into PNG or JPEG, or many other formats.
 
 ## TODO
 - More primitives (especially meshes!)
 - Bounding volume / Spatial acceleration techniques
 - Compound transformations
 - Time-based transformations (motion blur!)
+- Ensure partial frames can't end up in the `.rrt` files
