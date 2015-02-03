@@ -89,7 +89,7 @@ int main(int argc, char * const argv[]) {
 		image *img = new image("hdri/hallway1_color-077ma.jpg");
 		primitive* sky = new sphere();
 		sky->transform(transform::scale(50));
-		sky->set_shader(new Shader::hdri(world, img));
+		sky->set_shader(new Shader::hdri(world, img, 1.6));
 		world += sky;
 	}
 
