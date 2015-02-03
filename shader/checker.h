@@ -31,7 +31,7 @@ namespace Shader {
 			bool z = uv.z < m_size || uv.z >= (1 - m_size);
 			bool which = x ^ y ^ z;
 
-			return which ? m_s1->shade(ray, p, n, uv) : m_s2->shade(ray, p, n, uv);
+			return (which ? m_s1 : m_s2)->shade(ray, p, n, uv);
 		}
 	};
 
