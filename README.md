@@ -36,4 +36,3 @@ Two samples scenes are included so far, "snooker" and "cornell".
 - Bounding volume / Spatial acceleration techniques
 - Compound transformations
 - Time-based transformations (motion blur!)
-- 
