@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>RRT by raybellis</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>RRT</h1>
+        <p>Ray&#39;s Ray Tracer</p>
+        <p class="view"><a href="https://github.com/raybellis/RRT">View the Project on GitHub <small>raybellis/RRT</small></a></p>
+        <ul>
+          <li><a href="https://github.com/raybellis/RRT/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/raybellis/RRT/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/raybellis/RRT">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="rrt---rays-ray-tracer" class="anchor" href="#rrt---rays-ray-tracer" aria-hidden="true"><span class="octicon octicon-link"></span></a>RRT - Ray's Ray Tracer</h1>
+
+<p>RRT is a <em>stochastic</em>, <em>multithreaded</em> ray tracer written in C++ that relies on casting a very high number of samples per pixel into the scene and then scatters diffuse rays in every direction.</p>
+
+<p>The method is far from efficient and producing a noise-free image may take thousands of samples per pixel (and hours of CPU time) but it produces effects "for free" that many other ray tracers can only approximate, including:</p>
+
+<ul>
+<li>diffuse inter-reflection (colour bleeding)</li>
+<li>area lighting and soft shadow</li>
+<li>glossy surfaces</li>
+<li>depth-of-field</li>
+<li>caustics</li>
+</ul>
+
+<p>The current implementation supports only a limited number of 3D primitives:</p>
+
+<ul>
+<li>spheres (of course!)</li>
+<li>cubes</li>
+<li>infinite planes</li>
+<li>compound (parent node for collections of the above)</li>
+</ul>
+
+<p>Arbitrary homogenous transformations are supported to move and deform primitives, but as yet these transformations cannot be nested.  That is to say, a compound node cannot yet have a transformation that applies to all child nodes within it.</p>
+
+<p>There is no scene description language - the user has to write a C++ program that makes call to the RRT APIs that create nodes, attach shaders to nodes, etc.   See the example programs in <code>scenes/</code> for more details.</p>
+
+<p>The most powerful shader is <code>Shader::stochastic</code> that can take a <code>surface</code> object that is similar to those used in other ray tracers and will automatically cast a single diffuse ray, a specular reflected ray and a tranmitted ray, depending on the surface's properties.</p>
+
+<p>For a surface that has purely diffuse lighting properties the <code>Shader::diffuse</code> shader can be used instead and is slightly more efficient than <code>Shader::stochastic</code> because it doesn't have to consider the surface properties to decide whether to cast any non-diffuse rays.</p>
+
+<p>There are no "lights" in RRT.  Any object can have a <code>Shader::constant</code> shader attached to it that makes that object a fixed colour and indirectly causes it to "illuminate" any object that casts a ray in its direction.</p>
+
+<h2>
+<a id="compiling" class="anchor" href="#compiling" aria-hidden="true"><span class="octicon octicon-link"></span></a>Compiling</h2>
+
+<p>RRT requires a C++11 compatible compiler, Boost, GD, libpng, libjpeg and libz.  The supplied Makefile is for Mac OS X with macports.</p>
+
+<h2>
+<a id="running" class="anchor" href="#running" aria-hidden="true"><span class="octicon octicon-link"></span></a>Running</h2>
+
+<p>Two samples scenes are included so far, "snooker" and "cornell".</p>
+
+<p>The demo programs will either start a new render, or if passed a <code>.rrt</code> file as parameter will use that as the starting render buffer state.  Every minute the current render buffer is rewritten to the <code>.rrt</code> file, as well as a 48-bpp PPM file.   The <code>netpbm</code> package can be used to convert  PPM files into PNG or JPEG, or many other formats.</p>
+
+<h2>
+<a id="todo" class="anchor" href="#todo" aria-hidden="true"><span class="octicon octicon-link"></span></a>TODO</h2>
+
+<ul>
+<li>More primitives (especially meshes!)</li>
+<li>Bounding volume / Spatial acceleration techniques</li>
+<li>Compound transformations</li>
+<li>Time-based transformations (motion blur!)</li>
+<li>Ensure partial frames can't end up in the <code>.rrt</code> files</li>
+</ul>
+
+<h2>
+<a id="sample-image" class="anchor" href="#sample-image" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sample Image</h2>
+
+<p>2048 samples per pixel, scaled 0.5, brightened slightly (<code>pnmnorm -wv 160</code>) and converted to JPEG with quality 95</p>
+
+<p><img src="https://dl.dropboxusercontent.com/u/4713475/RRT/snooker.jpg" alt=""></p>
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/raybellis">raybellis</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-59299711-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
