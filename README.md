@@ -17,7 +17,7 @@ The current implementation supports only a limited number of 3D primitives:
 
 Arbitrary homogenous transformations are supported to move and deform primitives, but as yet these transformations cannot be nested.  That is to say, a compound node cannot yet have a transformation that applies to all child nodes within it.
 
-There is no scene description language - the user has to write a C++ program that makes call to the RRT APIs that create nodes, attach shaders to nodes, etc.
+There is no scene description language - the user has to write a C++ program that makes call to the RRT APIs that create nodes, attach shaders to nodes, etc.   See the example programs in `scenes/` for more details.
 
 The most powerful shader is `Shader::stochastic` that can take a `surface` object that is similar to those used in other ray tracers and will automatically cast a single diffuse ray, a specular reflected ray and a tranmitted ray, depending on the surface's properties.
 
