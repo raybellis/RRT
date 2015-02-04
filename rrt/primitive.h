@@ -37,8 +37,8 @@ public:
 	virtual uvcoord					uvmap(const point3& point) const = 0;
 
 public:
-	virtual void					set_shader(const shader& s) { m_shader = &s; }
-	virtual void					set_shader(const shader* s) { m_shader = s; }
+	virtual void					shader(const Shader::base& s) { m_shader = &s; }
+	virtual void					shader(const Shader::base* s) { m_shader = s; }
 	virtual colour					shade(const ray& r, const point3& p, const vector3& n) const;
 	
 public:
