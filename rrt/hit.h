@@ -31,7 +31,7 @@ public:
 	hit&					operator=(const hit& rhs);
 	point3::num				distance() const	{ return m_distance; }
 	const primitive&		what() const		{ return *m_primitive; }
-	const transform			transform() const	{ return *m_transform; }
+	const transform&		transform() const	{ return *m_transform; }
 
 	bool					operator<(const hit& rhs) const;
 };
