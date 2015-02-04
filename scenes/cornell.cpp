@@ -1,6 +1,7 @@
 #include <iostream>
 #include <iomanip>
 #include <cmath>
+#include <csignal>
 #include <unistd.h>
 
 #include <rrt/rrt.h>
@@ -117,6 +118,7 @@ int main(int argc, char * const argv[]) {
 		r = new renderer(world, camera, 1024, 1024);
 	}
 
+	signal(SIGINT, &renderer::stop_all);
 	r->add_output_job(&renderer::write_ppm16, "cornell.ppm", 8);
 	r->add_output_job(&renderer::write_rrt, "cornell.rrt", 8);
 	r->start();

@@ -19,6 +19,8 @@
 #include "camera.h"
 #include "math.h"
 
+std::set<renderer*> renderer::s_running;
+
 renderer::renderer(scene& scene, camera& camera, const int _w, const int _h) :
 	m_scene(scene), m_camera(camera), m_frame(0),
 	w(_w), h(_h)
@@ -106,6 +108,12 @@ void renderer::trace_forever()
 
 void renderer::start(int maxthreads)
 {
+	if (s_running.count(this)) {
+		throw std::runtime_error("renderer instance already started");
+	} else {
+		s_running.insert(this);
+	}
+
 	int ncpu = boost::thread::hardware_concurrency();
 	int nthreads = (maxthreads > 0) ? std::min(maxthreads, ncpu) : ncpu;
 
@@ -118,12 +126,21 @@ void renderer::start(int maxthreads)
 	}
 
 	group.join_all();
+	s_running.erase(this);
 }
 
 void renderer::stop()
 {
 	std::cerr << "\nshutting down..." << std::endl;
+	m_jobs.empty();
 	m_shutdown = true;
+}
+
+void renderer::stop_all(int)
+{
+	for (auto r : s_running) {
+		r->stop();
+	}
 }
 
 void renderer::write_ppm(const std::string& filename)
