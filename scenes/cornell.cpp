@@ -39,40 +39,40 @@ int main(int argc, char * const argv[]) {
 	floor.set_shader(new Shader::checker(world,
 		new Shader::stochastic(world, black_tile),
 		new Shader::stochastic(world, white_tile)));
-	floor.transform(transform::rotate_y(math::pi / 4.0));
-	floor.transform(transform::scale(2.0));
-	floor.transform(transform::translate(0, -4, 0));
+	floor.rotate_y(math::pi / 4.0);
+	floor.scale(2.0);
+	floor.translate(0, -4, 0);
 	world += floor;
 
-	left.transform(transform::rotate_z(-math::pi / 2.0));
-	left.transform(transform::translate(-4, 0, 0));
+	left.rotate_z(-math::pi / 2.0);
+	left.translate(-4, 0, 0);
 	left.set_shader(new Shader::diffuse(world, colour(1, 0.5, 0.5)));
 	world += left;
 
-	right.transform(transform::rotate_z(math::pi / 2.0));
-	right.transform(transform::translate(4, 0, 0));
+	right.rotate_z(math::pi / 2.0);
+	right.translate(4, 0, 0);
 	right.set_shader(new Shader::diffuse(world, colour(0.5, 1, 0.5)));
 	world += right;
 
-	back.transform(transform::rotate_x(-math::pi / 2.0));
-	back.transform(transform::translate(0, 0, 4));
+	back.rotate_x(-math::pi / 2.0);
+	back.translate(0, 0, 4);
 	back.set_shader(new Shader::diffuse(world, 0.8));
 	world += back;
 
-	ceiling.transform(transform::rotate_x(math::pi));
-	ceiling.transform(transform::translate(0, 4, 0));
+	ceiling.rotate_x(math::pi);
+	ceiling.translate(0, 4, 0);
 	ceiling.set_shader(new Shader::diffuse(world, 1.0));
 	world += ceiling;
 
 	cube		light1;
-	light1.transform(transform::scale(0.001, 1.6, 2));
-	light1.transform(transform::translate(-4, 1, 0));
+	light1.scale(0.001, 1.6, 2);
+	light1.translate(-4, 1, 0);
 	light1.set_shader(new Shader::constant(world, 10.0));
 	world += light1;
 
 	cube		light2;
-	light2.transform(transform::scale(0.001, 1.6, 2));
-	light2.transform(transform::translate(4, 1, 0));
+	light2.scale(0.001, 1.6, 2);
+	light2.translate(4, 1, 0);
 	light2.set_shader(new Shader::constant(world, 10.0));
 	world += light2;
 
@@ -83,8 +83,8 @@ int main(int argc, char * const argv[]) {
 	crystal.ior(1.6);
 
 	sphere		ball;
-	ball.transform(transform::scale(1.4));
-	ball.transform(transform::translate(2.6, -2.6, -2));
+	ball.scale(1.4);
+	ball.translate(2.6, -2.6, -2);
 	ball.set_shader(new Shader::stochastic(world, crystal));
 	world += ball;
 
@@ -94,7 +94,7 @@ int main(int argc, char * const argv[]) {
 	gold.smooth(0.05);
 
 	sphere		ball2;
-	ball2.transform(transform::translate(-2.6, -3, -1));
+	ball2.translate(-2.6, -3, -1);
 	ball2.set_shader(new Shader::stochastic(world, gold));
 	world += ball2;
 
@@ -104,9 +104,9 @@ int main(int argc, char * const argv[]) {
 	silver.smooth(0.05);
 
 	cube		box;
-	box.transform(transform::rotate_y(math::pi / 7.0));
-	box.transform(transform::scale(1.2));
-	box.transform(transform::translate(0, -2.8, 1.8));
+	box.rotate_y(math::pi / 7.0);
+	box.scale(1.2);
+	box.translate(0, -2.8, 1.8);
 	box.set_shader(new Shader::stochastic(world, silver));
 	world += box;
 

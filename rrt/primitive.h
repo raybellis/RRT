@@ -42,8 +42,18 @@ public:
 	virtual colour					shade(const ray& r, const point3& p, const vector3& n) const;
 	
 public:
-	void							transform(const transform& t);
 	const class transform&			transform() const { return m_transform; }
+	void							transform(const class transform& t);
+
+	void							translate(double x, double y, double z);
+	void							translate(const vector3& v);
+	void							scale(double x, double y, double z);
+	void							scale(double s);
+	void							rotate(double x, double y, double z, double theta);
+	void							rotate(const vector3& v, double theta);
+	void							rotate_x(double theta);
+	void							rotate_y(double theta);
+	void							rotate_z(double theta);
 
 };
 

@@ -28,6 +28,51 @@ void primitive::transform(const class transform& t)
 	m_transform = t * m_transform;
 }
 
+void primitive::translate(double x, double y, double z)
+{
+	transform(transform::translate(x, y, z));
+}
+
+void primitive::translate(const vector3& v)
+{
+	transform(transform::translate(v));
+}
+
+void primitive::scale(double x, double y, double z)
+{
+	transform(transform::scale(x, y, z));
+}
+
+void primitive::scale(double s)
+{
+	transform(transform::scale(s));
+}
+
+void primitive::rotate(double x, double y, double z, double theta)
+{
+	transform(transform::rotate(x, y, z, theta));
+}
+
+void primitive::rotate(const vector3& v, double theta)
+{
+	transform(transform::rotate(v, theta));
+}
+
+void primitive::rotate_x(double theta)
+{
+	transform(transform::rotate_x(theta));
+}
+
+void primitive::rotate_y(double theta)
+{
+	transform(transform::rotate_y(theta));
+}
+
+void primitive::rotate_z(double theta)
+{
+	transform(transform::rotate_z(theta));
+}
+
 //----------------------------------------------------------
 
 compound::compound() :

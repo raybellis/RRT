@@ -47,7 +47,7 @@ int main(int argc, char * const argv[]) {
 				double z = (4 - i) * dz;
 
 				primitive *ball = new sphere();
-				ball->transform(transform::translate(x, 1, z));
+				ball->translate(x, 1, z);
 				ball->set_shader(s);
 				pack += ball;
 			}
@@ -62,7 +62,7 @@ int main(int argc, char * const argv[]) {
 
 		double z = 4 * ::sqrt(3.0) + 2;
 		primitive* ball = new sphere();
-		ball->transform(transform::translate(0, 1, z));
+		ball->translate(0, 1, z);
 		ball->set_shader(new Shader::stochastic(world, pink));
 		world += ball;
 	}
@@ -73,7 +73,7 @@ int main(int argc, char * const argv[]) {
 		black.diffuse(0.1);
 
 		primitive* ball = new sphere();
-		ball->transform(transform::translate(0, 1, -3));
+		ball->translate(0, 1, -3);
 		ball->set_shader(new Shader::stochastic(world, black));
 		world += ball;
 	}
@@ -88,7 +88,7 @@ int main(int argc, char * const argv[]) {
 	{
 		image *img = new image("hdri/hallway1_color-077ma.jpg");
 		primitive* sky = new sphere();
-		sky->transform(transform::scale(50));
+		sky->scale(50);
 		sky->set_shader(new Shader::hdri(world, img, 1.6));
 		world += sky;
 	}
