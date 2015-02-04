@@ -92,7 +92,7 @@ void renderer::finish_frame(colour *c)
 void renderer::trace_forever()
 {
 	colour *c = new colour[w * h];
-	while (true) {
+	while (!m_shutdown) {
 		int i = 0;
 		for (int y = 0; y < h; ++y) {
 			for (int x = 0; x < w; ++x) {
@@ -118,6 +118,12 @@ void renderer::start(int maxthreads)
 	}
 
 	group.join_all();
+}
+
+void renderer::stop()
+{
+	std::cerr << "\nshutting down..." << std::endl;
+	m_shutdown = true;
 }
 
 void renderer::write_ppm(const std::string& filename)

@@ -58,9 +58,10 @@ protected:
 
 public:
 	void					start(int maxthreads = 0);
-	void					add_output_job(job_handler handler, const std::string& filename, unsigned int freq);
+	void					stop();
 
 public:	// output methods
+	void					add_output_job(job_handler handler, const std::string& filename, unsigned int freq);
 	void					write_ppm(const std::string& filename);
 	void					write_ppm16(const std::string& filename);
 	void					write_rrt(const std::string& filename);
