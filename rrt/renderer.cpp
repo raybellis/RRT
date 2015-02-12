@@ -22,11 +22,9 @@
 std::set<renderer*> renderer::s_running;
 
 renderer::renderer(scene& scene, camera& camera, const int _w, const int _h) :
-	m_scene(scene), m_camera(camera), m_frame(0),
-	w(_w), h(_h)
+	m_scene(scene), m_camera(camera), m_frame(0), w(_w), h(_h)
 {
-	int n = w * h;
-	colours = new colour[n];
+	colours = new colour[w * h];
 	camera.aspect(w, h);
 }
 
@@ -37,11 +35,8 @@ renderer::renderer(scene& scene, camera& camera, const std::string& filename) :
 	::fread(&w, sizeof(w), 1, fp);
 	::fread(&h, sizeof(h), 1, fp);
 	::fread(&m_frame, sizeof(m_frame), 1, fp);
-
-	int n = w * h;
-	colours = new colour[n];
-
-	::fread(colours, sizeof(colour), n, fp);
+	colours = new colour[w * h];
+	::fread(colours, sizeof(colour), w * h, fp);
 	::fclose(fp);
 
 	camera.aspect(w, h);
@@ -73,7 +68,7 @@ colour renderer::trace_pixel(int px, int py)
 	return m_scene.trace(r);
 }
 
-void renderer::finish_frame(colour *c)
+void renderer::finish_frame(const colour *c)
 {
 	// copy frame details
 	for (unsigned int i = 0, n = w * h; i < n; ++i) {

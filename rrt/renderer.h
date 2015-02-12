@@ -52,7 +52,7 @@ public:
 	~renderer();
 
 protected:
-	void							finish_frame(colour *c);
+	void							finish_frame(const colour *c);
 	colour							trace_pixel(int px, int py);
 	void							trace_forever();
 

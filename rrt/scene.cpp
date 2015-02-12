@@ -7,6 +7,8 @@
  *
  */
 
+#include <algorithm>
+
 #include "scene.h"
 #include "math.h"
 
@@ -16,12 +18,12 @@ scene::scene() : m_background(0.5)
 
 colour scene::trace(const ray& ray) const
 {
-	hits				hits;
+	hits hits;
+	hits.reserve(20);
 
 	if ((ray.level() < 6) && intersect(ray, hits) > 0) {
 
-		std::partial_sort(hits.begin(), hits.begin() + 1, hits.end());
-		const auto& hit = hits[0];
+		const auto& hit = *std::min_element(hits.begin(), hits.end());
 		const auto& prim = hit.what();
 		const auto& trans = hit.transform();
 

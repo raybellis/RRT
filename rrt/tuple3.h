@@ -22,7 +22,7 @@ public:
 
 public:
 	num						x, y, z;
-	
+
 public:
 	tuple3();
 	tuple3(const T x, const T y, const T z);

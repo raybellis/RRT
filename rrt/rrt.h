@@ -16,9 +16,9 @@
 class colour : public tuple3<float> {
 
 public:
-	num&					r() { return x; };
-	num&					g() { return y; };
-	num&					b() { return z; };
+	num						r() const { return x; };
+	num						g() const { return y; };
+	num						b() const { return z; };
 
 public:
 	colour();
