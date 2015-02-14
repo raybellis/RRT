@@ -11,26 +11,10 @@
 #include "camera.h"
 #include "math.h"
 
-camera::camera()
-{
-}
-
-camera::camera(const point3& _eye, const point3& _center) :
-	eye(_eye), center(_center)
-{
-	up.set(0, 1, 0);
-	fov(30);
-	m_aspect = 4.0 / 3;
-
-	recalc();
-}
-
 camera::camera(const point3& _eye, const point3& _center, const vector3& _up) :
-	eye(_eye), center(_center), up(_up)
+	eye(_eye), center(_center), up(_up), m_aspect(4.0 / 3), m_aperture(0)
 {
 	fov(30);
-	m_aspect = 4.0 / 3;
-
 	recalc();
 }
 

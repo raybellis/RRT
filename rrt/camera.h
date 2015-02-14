@@ -38,8 +38,7 @@ protected:
 	void					recalc();
 
 public:
-							camera(const point3& eye, const point3& center);
-							camera(const point3& eye, const point3& center, const vector3& up);
+							camera(const point3& eye, const point3& center, const vector3& up = vector3(0, 1, 0));
 	
 public:
 	void					fov(double fovy);
