@@ -19,6 +19,7 @@ public:
 
 protected:
 	array					d;
+	bool					identity;
 
 public:
 	matrix4();

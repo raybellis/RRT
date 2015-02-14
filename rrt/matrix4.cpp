@@ -7,9 +7,10 @@
  *
  */
 
+#include <algorithm>
 #include "matrix4.h"
 
-static double identity[] = {
+static double _identity_matrix[] = {
 	1, 0, 0, 0,
 	0, 1, 0, 0,
 	0, 0, 1, 0,
@@ -18,34 +19,44 @@ static double identity[] = {
 
 static void __copy(double *dst, const double *src)
 {
-	for (int i = 0; i < 16; ++i) {
+	for (unsigned int i = 0; i < 16; ++i) {
 		dst[i] = src[i];
 	}
 }
 
-matrix4::matrix4()
+matrix4::matrix4() : identity(true)
 {
-	__copy(d, identity);
+	__copy(d, _identity_matrix);
 }
 
-matrix4::matrix4(const matrix4& rhs)
+matrix4::matrix4(const matrix4& rhs) : identity(rhs.identity)
 {
 	__copy(d, rhs.d);
 }
 
-matrix4::matrix4(const array& a)
+matrix4::matrix4(const array& a) : identity(false)
 {
 	__copy(d, a);
+	identity = std::equal(std::begin(d), std::end(d), std::begin(_identity_matrix));
 }
 
 matrix4& matrix4::operator=(const matrix4& rhs)
 {
 	__copy(d, rhs.d);
+	identity = rhs.identity;
 	return *this;
 }
 
 matrix4 matrix4::operator*(const matrix4& rhs) const
 {
+	if (rhs.identity) {
+		return *this;
+	}
+
+	if (identity) {
+		return rhs;
+	}
+
 	array a;
 	const array& b = rhs.d;
 
@@ -74,6 +85,10 @@ matrix4 matrix4::operator*(const matrix4& rhs) const
 
 matrix4 matrix4::operator~() const
 {
+	if (identity) {
+		return *this;
+	}
+
 	array a;
 	int k = 0;
 	for (int i = 0; i < 4; ++i) {
@@ -97,6 +112,10 @@ double matrix4::operator[](const int n) const
 
 vector3 matrix4::operator*(const vector3& v) const
 {
+	if (identity) {
+		return v;
+	}
+
 	double x = d[0] * v.x + d[1] * v.y + d[ 2] * v.z;
 	double y = d[4] * v.x + d[5] * v.y + d[ 6] * v.z;
 	double z = d[8] * v.x + d[9] * v.y + d[10] * v.z;
@@ -106,6 +125,10 @@ vector3 matrix4::operator*(const vector3& v) const
 
 point3 matrix4::operator*(const point3& p) const
 {
+	if (identity) {
+		return p;
+	}
+
 	double x = d[ 0] * p.x + d[ 1] * p.y + d[ 2] * p.z + d[ 3];
 	double y = d[ 4] * p.x + d[ 5] * p.y + d[ 6] * p.z + d[ 7];
 	double z = d[ 8] * p.x + d[ 9] * p.y + d[10] * p.z + d[11];
