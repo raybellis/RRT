@@ -24,14 +24,15 @@ colour scene::trace(const ray& ray) const
 	if ((ray.level() < 6) && intersect(ray, hits) > 0) {
 
 		const auto& hit = *std::min_element(hits.begin(), hits.end());
-		const auto& prim = hit.what();
-		const auto& trans = hit.transform();
+		const auto prim = hit.what();
+		const auto trans = hit.transform();
+		const auto hi = hit.hitinfo();
 
 		const point3 pw = ray.point_at(hit.distance());
-		const point3 po = trans.world2object(pw);
+		const point3 po = trans->world2object(pw);
 
-		const vector3 no = prim.normal(po);
-		vector3 nw = trans.normal2world(no);
+		const vector3 no = prim->normal(po, hi);
+		vector3 nw = trans->normal2world(no);
 		nw.normalise();
 
 		// treat primitives as two sided
@@ -39,7 +40,7 @@ colour scene::trace(const ray& ray) const
 			nw.flip();
 		}
 
-		return prim.shade(ray, pw, nw);
+		return prim->shade(ray, pw, nw);
 	}
 
 	return m_background;

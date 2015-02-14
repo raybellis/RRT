@@ -19,7 +19,7 @@ public:
 
 public:
 	int						intersect(const ray& ray, hits& hits) const;
-	vector3					normal(const point3& p) const;
+	vector3					normal(const point3& p, const hitinfo *) const;
 	uvcoord					uvmap(const point3& p) const;
 };
 

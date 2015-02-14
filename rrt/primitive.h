@@ -30,10 +30,11 @@ protected:
 
 public:
 	primitive();
+	virtual ~primitive();
 
 public:
 	virtual int						intersect(const ray& ray, hits& hits) const = 0;
-	virtual vector3					normal(const point3& point) const = 0;
+	virtual vector3					normal(const point3& point, const hitinfo *hi = nullptr) const = 0;
 	virtual uvcoord					uvmap(const point3& point) const = 0;
 
 public:
@@ -71,7 +72,7 @@ public:
 
 public:
 	virtual	int						intersect(const ray& ray, hits& hits) const;
-	virtual vector3					normal(const point3& point) const;
+	virtual vector3					normal(const point3& point, const hitinfo *hi = nullptr) const;
 	virtual uvcoord					uvmap(const point3& point) const;
 
 	void							operator+=(const primitive& p) { prims.push_back(&p); }

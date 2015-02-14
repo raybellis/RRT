@@ -17,9 +17,16 @@ primitive::primitive() : m_shader(0)
 {
 }
 
+primitive::~primitive()
+{
+}
+
 colour primitive::shade(const ray& r, const point3& p, const vector3& n) const
 {
 	uvcoord uv = uvmap(m_transform.world2object(p));
+	if (!m_shader) {
+		throw std::runtime_error("no shader attached");
+	}
 	return m_shader->shade(r, p, n, uv);
 };
 
@@ -80,20 +87,19 @@ compound::compound() :
 {
 }
 
-int compound::intersect(const ray& ray, hits& hits) const
+int compound::intersect(const ray& ray_in, hits& hits) const
 {
 	int count = 0;
 	for (auto p: prims) {
-		const auto& t = p->transform() * m_transform;
-		const auto ro = t.world2object(ray);
-		count += p->intersect(ro, hits);
+		const auto t = p->transform() * m_transform;
+		auto ray_out = t.world2object(ray_in);
+		count += p->intersect(ray_out, hits);
 	}
-
 	return count;
 }
 
 // this should never be invoked
-vector3	compound::normal(const point3&) const
+vector3	compound::normal(const point3&, const hitinfo*) const
 {
 	throw std::runtime_error("compound::normal() called");
 }

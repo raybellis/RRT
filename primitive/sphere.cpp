@@ -47,7 +47,7 @@ int sphere::intersect(const ray& ray, hits& hits) const
 	return nroots;
 }
 
-vector3 sphere::normal(const point3& p) const
+vector3 sphere::normal(const point3& p, const hitinfo *) const
 {
 	return vector3(p).normalise();
 }

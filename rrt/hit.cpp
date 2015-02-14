@@ -10,8 +10,9 @@
 #include "hit.h"
 #include "primitive.h"
 
-hit::hit(point3::num distance, const primitive *primitive) :
-	m_distance(distance), m_primitive(primitive), m_transform(&primitive->transform())
+hit::hit(point3::num distance, const primitive *primitive, const struct hitinfo *hi) :
+	m_distance(distance), m_primitive(primitive),
+	m_transform(&primitive->transform()), m_hitinfo(hi)
 {
 }
 
@@ -22,11 +23,28 @@ hit::hit(const hit& rhs)
 	m_transform = rhs.m_transform;
 }
 
+hit::hit(const hit&& rhs)
+{
+	m_distance = rhs.m_distance;
+	m_primitive = rhs.m_primitive;
+	m_transform = rhs.m_transform;
+	m_hitinfo = std::move(rhs.m_hitinfo);
+}
+
 hit& hit::operator=(const hit& rhs)
 {
 	m_distance = rhs.m_distance;
 	m_primitive = rhs.m_primitive;
 	m_transform = rhs.m_transform;
+	return *this;
+}
+
+hit& hit::operator=(const hit&& rhs)
+{
+	m_distance = rhs.m_distance;
+	m_primitive = rhs.m_primitive;
+	m_transform = rhs.m_transform;
+	m_hitinfo = std::move(rhs.m_hitinfo);
 	return *this;
 }
 

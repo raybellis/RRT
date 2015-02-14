@@ -38,7 +38,7 @@ int plane::intersect(const ray& ray, hits& hits) const
 	return 1;
 }
 
-vector3 plane::normal(const point3&) const
+vector3 plane::normal(const point3&, const hitinfo *) const
 {
 	return s_normal;
 }

@@ -67,7 +67,7 @@ int cube::intersect(const ray& ray, hits& hits) const
 	return 2;
 }
 
-vector3	cube::normal(const point3& pt) const
+vector3	cube::normal(const point3& pt, const hitinfo*) const
 {
 	point3::array p;
 	vector3::array n;
