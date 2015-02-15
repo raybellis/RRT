@@ -9,10 +9,12 @@ The method is far from efficient and producing a noise-free image may take thous
 - depth-of-field
 - caustics
 
-The current implementation supports only a limited number of 3D primitives:
+The current implementation supports a limited number of 3D primitives:
 - spheres (of course!)
 - cubes
 - infinite planes
+- triangle
+- triangle meshes (via Open Asset Import Library)
 - compound (parent node for collections of the above)
 
 Arbitrary homogenous transformations are supported to move and deform primitives, but as yet these transformations cannot be nested.  That is to say, a compound node cannot yet have a transformation that applies to all child nodes within it.
@@ -27,7 +29,7 @@ There are no "lights" in RRT.  Any object can have a `Shader::constant` shader a
 
 ## Compiling
 
-RRT requires a C++11 compatible compiler, Boost, GD, libpng, libjpeg and libz.  The supplied Makefile is for Mac OS X with macports.
+RRT requires a C++11 compatible compiler, Boost, Open Asset Import Library, GD, libpng, libjpeg and libz.  The supplied Makefile is for Mac OS X with macports.
 
 ## Running
 
@@ -36,8 +38,8 @@ Two samples scenes are included so far, "snooker" and "cornell".
 The demo programs will either start a new render, or if passed a `.rrt` file as parameter will use that as the starting render buffer state.  Every eight samples the current render buffer is rewritten to the `.rrt` file, as well as a 48-bpp PPM file.   The `netpbm` package can be used to convert  PPM files into PNG or JPEG, or many other formats.
 
 ## TODO
-- More primitives (especially meshes!)
+- More primitives
 - Bounding volume / Spatial acceleration techniques
 - Compound transformations
 - Time-based transformations (motion blur!)
-- Ensure partial frames can't end up in the `.rrt` files
+- ~~Ensure partial frames can't end up in the `.rrt` files~~
