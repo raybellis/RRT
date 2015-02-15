@@ -58,7 +58,7 @@ public:
 
 };
 
-typedef std::list<const primitive*>	prims;
+typedef std::list<primitive*>		prims;
 
 //---------------------------------------------------------
 
@@ -75,8 +75,11 @@ public:
 	virtual vector3					normal(const point3& point, const hitinfo *hi = nullptr) const;
 	virtual uvcoord					uvmap(const point3& point) const;
 
-	void							operator+=(const primitive& p) { prims.push_back(&p); }
-	void							operator+=(const primitive* p) { prims.push_back(p); }
+	virtual void					shader(const Shader::base& s);
+	virtual void					shader(const Shader::base* s);
+
+	void							operator+=(primitive& p) { prims.push_back(&p); }
+	void							operator+=(primitive* p) { prims.push_back(p); }
 };
 
 //---------------------------------------------------------

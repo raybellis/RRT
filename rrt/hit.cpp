@@ -21,6 +21,7 @@ hit::hit(const hit& rhs)
 	m_distance = rhs.m_distance;
 	m_primitive = rhs.m_primitive;
 	m_transform = rhs.m_transform;
+	m_hitinfo = rhs.m_hitinfo;
 }
 
 hit::hit(const hit&& rhs)
@@ -36,6 +37,7 @@ hit& hit::operator=(const hit& rhs)
 	m_distance = rhs.m_distance;
 	m_primitive = rhs.m_primitive;
 	m_transform = rhs.m_transform;
+	m_hitinfo = rhs.m_hitinfo;
 	return *this;
 }
 

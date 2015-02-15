@@ -10,6 +10,7 @@
 #include <stdexcept>
 #include "primitive.h"
 #include "transform.h"
+#include <shader/diffuse.h>
 
 //----------------------------------------------------------
 
@@ -23,10 +24,11 @@ primitive::~primitive()
 
 colour primitive::shade(const ray& r, const point3& p, const vector3& n) const
 {
-	uvcoord uv = uvmap(m_transform.world2object(p));
 	if (!m_shader) {
 		throw std::runtime_error("no shader attached");
 	}
+
+	uvcoord uv = uvmap(m_transform.world2object(p));
 	return m_shader->shade(r, p, n, uv);
 };
 
@@ -108,4 +110,16 @@ vector3	compound::normal(const point3&, const hitinfo*) const
 uvcoord compound::uvmap(const point3&) const
 {
 	throw std::runtime_error("compound::uvmap() called");
+}
+
+void compound::shader(const Shader::base& s) {
+	for (primitive *p: prims) {
+		p->shader(s);
+	}
+}
+
+void compound::shader(const Shader::base* s) {
+	for (primitive *p: prims) {
+		p->shader(s);
+	}
 }
