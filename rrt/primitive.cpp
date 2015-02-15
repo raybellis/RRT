@@ -91,10 +91,10 @@ compound::compound() :
 
 int compound::intersect(const ray& ray_in, hits& hits) const
 {
+	const ray ray_tmp = m_transform.world2object(ray_in);
 	int count = 0;
 	for (auto p: prims) {
-		const auto t = p->transform() * m_transform;
-		auto ray_out = t.world2object(ray_in);
+		const auto ray_out = p->transform().world2object(ray_tmp);
 		count += p->intersect(ray_out, hits);
 	}
 	return count;
