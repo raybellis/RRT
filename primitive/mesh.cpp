@@ -70,3 +70,17 @@ mesh::mesh(const std::string& filename)
 		std::cout << "mesh[" << m << "] loaded with " << mesh->mNumFaces << " faces and " << mesh->mNumVertices << " vertices" << std::endl;
 	}
 }
+
+int mesh::intersect(const ray& ray_in, hits& h) const
+{
+	// return compound::intersect(ray_in, h);
+	hits h_tmp;
+	h_tmp.reserve(2);
+
+	ray ray_tmp = m_transform.world2object(ray_in);
+	if (m_cube.intersect(ray_tmp, h_tmp)) {
+		return compound::intersect(ray_in, h);
+	} else {
+		return 0;
+	}
+}

@@ -19,7 +19,7 @@
 int main(int argc, char * const argv[]) {
 
 	point3 eye(-2, 1, -3);
-	point3 center(0, 0, 0);
+	point3 center(0, -.1, 0);
 	camera camera(eye, center);
 	camera.fov(30);
 

@@ -17,8 +17,9 @@ plane::plane()
 {
 }
 
-int plane::intersect(const ray& ray, hits& hits) const
+int plane::intersect(const ray& ray_in, hits& hits) const
 {
+	auto ray = m_transform.world2object(ray_in);
 	double vd = s_normal.dot(ray.direction());
 
 	// reject parallel rays

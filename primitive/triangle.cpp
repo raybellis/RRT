@@ -29,6 +29,8 @@ triangle::triangle(const point3& p0, const point3& p1, const point3& p2,
 
 int triangle::intersect(const ray& ray, hits& hits) const
 {
+	// NB: triangles are assumed to be in world space (or at
+	//     least relative to their parent)
 	vector3 pvec = vector3::cross(ray.direction(), e2);
 	double det = e1.dot(pvec);
 	if (::fabs(det) < math::epsilon) return 0;

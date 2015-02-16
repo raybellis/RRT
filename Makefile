@@ -6,7 +6,7 @@ SRCS		= rrt/camera.cpp rrt/primitive.cpp rrt/ray.cpp rrt/hit.cpp \
 			  primitive/triangle.cpp primitive/mesh.cpp
 
 OBJS		= ${SRCS:%.cpp=%.o}
-BIN			= scenes/snooker scenes/cornell meshtest
+BIN			= scenes/snooker scenes/cornell scenes/meshtest
 
 BOOST		= /opt/local
 BOOSTINC	= $(BOOST)/include

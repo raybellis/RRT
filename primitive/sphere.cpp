@@ -15,10 +15,11 @@ sphere::sphere()
 {
 }
 
-int sphere::intersect(const ray& ray, hits& hits) const
+int sphere::intersect(const ray& ray_in, hits& hits) const
 {
 	int nroots = 0;
 
+	auto ray = m_transform.world2object(ray_in);
 	vector3 o = ray.origin();
 	vector3 d = ray.direction();
 

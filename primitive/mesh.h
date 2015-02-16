@@ -14,11 +14,18 @@
 
 #include <rrt/primitive.h>
 #include "triangle.h"
+#include "cube.h"
 
 class mesh : public compound {
 
+protected:
+	cube				m_cube;	// for bounds tests
+
 public:
 	mesh(const std::string& filename);
+
+public:
+	virtual int intersect(const ray& ray_in, hits& hits) const;
 
 };
 
