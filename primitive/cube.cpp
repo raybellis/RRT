@@ -49,7 +49,7 @@ int cube::intersect(const ray& ray_in, hits& hits) const
 			}
 
 			if (tnear > tfar) {
-				std::swap(tnear, tfar);
+				return 0;
 			}
 
 			if (tfar < math::epsilon) {
